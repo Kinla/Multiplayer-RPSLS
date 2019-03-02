@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css?family=Economica');
+
+.jumbotron {
+    max-width: 670px;
+}
+
+.title {
+    font-family: 'Economica', sans-serif;
+}
+
+.hide {
+    display: none;
+}
+
+.gameIcon {
+    font-size: 3rem;
+    margin: 0 5px;
+}
+
+.star {
+    font-size: 1.5rem;
+}
