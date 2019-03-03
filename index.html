@@ -8,43 +8,41 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/css/style.css">
-    <script src="jquery-3.3.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.8.5/firebase.js"></script>
     <title>Mutiplayer RPS</title>
 </head>
 <body>
     <!-- Start screen -->
-    <div class="container hide" id="greatings">
+    <div class="container" id="greetings">
         <div class="jumbotron mx-auto mt-4">
             <h1 class="display-4 title">Welcome to<br>Rock, Paper, Scissors, Lizard, Spock</h1>
-            <p class="lead">Let's get your info and find you a match. First two players get to play. Waitlisters will rotate to take place of the loser.</p>
-            <p>There are currently <span class="waitlisters">#</span> waitlisters.</p>
+            <p class="lead">Best two out of three!</p>
+            <p>There are currently <span class="watchers">#</span> people watching.</p>
             <hr>
             <form>
             <div class="form-group row">
                 <label for="name" class="col-sm-2 col-form-label">Your name</label>
                 <div class="col-sm-10">
-                <input type="name" class="form-control" id="playerName" placeholder="Sheldon Cooper">
+                <input type="name" class="form-control" id="playerName" placeholder="Sheldon Cooper" id="nameSubmit">
                 </div>
             </div>
-            <button class="btn btn-dark" type="submit">Start!</button>
+            <button class="btn btn-dark" type="submit" id="enterInfo">Start!</button>
         </form>
         </div>
     </div>
 
     <!-- Game page -->
     <div class="container mt-4" id="game">
-        <h1 class="text-center">Round <span id="round">#</span></h1>
-        <br>
-        <h4 class="text-center">Hey there are <span class="waitlisters">#</span> waitlisters watching this game.</h4>
+        <h1 class="text-center title">Round <span id="round">#</span></h1>
+        <h5 class="text-center">Choose well. <span class="watchers">#</span> people are watching this game.</h5>
         <br>
         <div class="row">
-            <div class="card col-5 mx-auto text-center" id="player1">
+            <div class="card col-5 mx-auto text-center" id="player0">
                 <div class="card-body">
-                    <p class="mb-0">Player 1</p>
-                    <h3 id="player1">Name</h3>
+                    <h1 class="name" id="name0">Player1</h1>
                     <br>
-                    <p class="mb-0" id="score">Score</p>
+                    <p class="mb-0" id="score0">Score</p>
                     <div class="mx-auto star">
                         <i class="far fa-star" id="star1"></i>
                         <i class="far fa-star" id="star2"></i>
@@ -52,18 +50,37 @@
                     </div>
                     <br>
                     <div>
-                        <i class="far fa-hand-rock gameIcon"></i>
-                        <i class="far fa-hand-paper gameIcon"></i>
-                        <i class="far fa-hand-scissors gameIcon"></i>
-                        <i class="far fa-hand-lizard gameIcon"></i>
-                        <i class="far fa-hand-spock gameIcon"></i>
+                        <i class="far fa-hand-rock gameIcon" id="rock"></i>
+                        <i class="far fa-hand-paper gameIcon" id="paper"></i>
+                        <i class="far fa-hand-scissors gameIcon" id="scissors"></i>
+                        <i class="far fa-hand-lizard gameIcon" id="lizard"></i>
+                        <i class="far fa-hand-spock gameIcon" id="spock"></i>
                     </div>
                     <br>
                     <p>Take your pick!</p>
                 </div>
             </div>
-            <div class="card col-5 mx-auto" id="player2">
-                
+            <div class="card col-5 mx-auto text-center" id="player1">
+                <div class="card-body">
+                    <h1 class="name" id="name1">Player2</h1>
+                    <br>
+                    <p class="mb-0" id="score1">Score</p>
+                    <div class="mx-auto star">
+                        <i class="far fa-star" id="star1"></i>
+                        <i class="far fa-star" id="star2"></i>
+                        <i class="far fa-star" id="star3"></i>
+                    </div>
+                    <br>
+                    <div>
+                        <i class="far fa-hand-rock gameIcon" id="rock"></i>
+                        <i class="far fa-hand-paper gameIcon" id="paper"></i>
+                        <i class="far fa-hand-scissors gameIcon" id="scissors"></i>
+                        <i class="far fa-hand-lizard gameIcon" id="lizard"></i>
+                        <i class="far fa-hand-spock gameIcon" id="spock"></i>
+                    </div>
+                    <br>
+                    <p>Take your pick!</p>
+                </div>
             </div>
         </div>
     </div>
