@@ -13,19 +13,25 @@ firebase.initializeApp(config);
 var database = firebase.database();
 
 // --------------------------------------------------------------
-// Link to Firebase Database for viewer tracking
+// Set up watcher tracking
 var connectionsRef = database.ref("/connections");
 
-// Link to Firebase Database for player information
+// Set up player list
+var playerListRef = database.ref("/playerList");
+
+// Set up player information
 var playerDataRef = database.ref("/playerData");
 
-// Link to Firebase Database to set up player list
-var playerListRef = database.ref("/playerListRef")
+// Set up player queue
+var queueRef = database.ref("/queue")
+
+// Set up 
 
 // --------------------------------------------------------------
 // Initial Values
-var maxNumPlayer = 2; // max number of player
-var watchers = 0; // number of people who joined the game but is not playing
+var playerList
+var maxNumPlayer = 2;
+var myname = "me";
 
 // --------------------------------------------------------------
 
@@ -41,6 +47,7 @@ connectedRef.on("value", function(snap) {
 
 // Number of watchers is the number of connections minus 2
 connectionsRef.on("value", function(snapshot) {
+    var watchers = 0;
     watchers = snapshot.numChildren() - 2
 
     if (watchers < 0){
@@ -51,57 +58,135 @@ connectionsRef.on("value", function(snapshot) {
 
 // --------------------------------------------------------------
 
-// Assign player
+// Get Name
 $("#enterInfo").on("click", function(event){
     event.preventDefault();
 
-    myName = $("#nameSubmit").text().trim();
-
-    if(playerList === null)
-
-    assignPlayer(myName);
-    
-    $("#greetings").hide();
+    myName = $("#playerName").val().trim();
+    if (myName.length > 0){
+        $("#greetings").hide();
+        $("#game").show();
+        setPlayer();
+    }
 
 });
 
-// Assign to player 1 or 2 or just watch
-function assignPlayer() {
-      playerListRef.transaction(function(playerList) {
-      var i;
+//set player
+playerListRef.once("value", function(snap){
+    myName = $("#playerName").val().trim();
+    if (snap === null){
+        playerListRef.set
+    }
+})
 
-      if (playerList === null) {
-        playerList = [];
-      };
+// reset function
+function resetGame (){
+    $("#greetings").show();
+    $("#game").hide();
+}
 
-      var joinedGame = false;
-      for(i = 0; i < maxNumPlayer; i++) {
-        if (playerList[i] === myName) {
-          return;
+
+/*
+// Game data to update when on change in database value (any node)
+database.ref().on("value", function(snapshot){
+    myName = $("#playerName").val();
+
+    //Assign player
+    player0 = snapshot.child("/playerList/0").val();
+    player1 = snapshot.child("/plyerList/1").val();
+
+    var playerList = [player0, player1]
+    assignPlayer(myName, playerList);
+
+    function assignPlayer(){
+        if (player0 === null){
+            var me = database.ref("playerList/0").set(myName);
+            me.removeOnDisconnect();
+        } else if (player1 === null){
+            var me = database.ref("playerList/1").set(myName);
+            me.removeOnDisconnect();
         }
-        else if (!(i in playerList) && !joinedGame) {
-          playerList[i] = myName;
-          joinedGame = true;
-          break;
+        
+    }
+
+console.log(playerList)
+
+
+});
+
+/*
+
+function assignPlayer(){
+    var i;
+    myName = $("#playerName").val();
+
+    for (i; i < maxNUmPlayer; i++){
+        if (playerListRef.ref("/" + i) === null) {
+            playerListRef
         }
-      };
-      if (joinedGame) {
-        return playerList;
-      };
-    }, function (success, transactionResultSnapshot) {
-      var myPlayerNumber = null,
-          resultPlayerList = transactionResultSnapshot
-      for(var i = 0; i < maxNumPlayer; i++) {
-        if (resultPlayerList[i] === myName) {
-          myPlayerNumber = i;
-          break;
+
+
+    }
+}
+
+//
+    /*assignPlayer(myName);
+    function assignPlayer(myName) {
+        console.log(myName)
+        var maxNumPlayer = 2; // max number of player
+        var i;  
+    
+        for (i = 0; i < maxNumPlayer; i++){
+            if (queue[i] !== null){
+                queue[i] = myName
+                return i;
+            }; // else you are not assigned a # = not playing
+    
+            playerList[i] = myName;
+            playerListRef.set(playerList);
+            
+            return playerList
+    
         };
-      };
+    
+    };
+    queueRef.OnDisconnect().update(playerList[i] = null)
+   */
 
-      //playerListRef.child(myPlayerNumber).removeOnDisconnect();
-      //playGame(myPlayerNumber, myUserId);
-    });
-  }
+        //setting set player list data and remove from queue --> updates firebase
+
+        // determine "myPlayerNumber"
+
+        // display player name
+
+        // shows either waiting for opponent or waiting
+
+        // render RPSLS buttons if both opponents are registered
+        // opponent would just show "making a choice" + "???"
+    
+    // Play the game
+    // loop this until someone's score = 3 first
+        // chose your RPSLS -- > updates firebase
+
+        // when both you and opponent have chosen
+
+            // evaluate if you won --> updates firebase
+
+            // display message
+
+            // update score + round # --> updates firebase
+
+    // Replace the game loser with the next one in queue
+
+    // Reove the game loser + move him to back of queue
+
+    // Remove database value when user disconnect
+        //queue
+        //playerList
+
+
+
+// Assign to player 1 or 2 or just watch
 
 
 
